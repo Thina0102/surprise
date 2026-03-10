@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Surprise</title>
+
+<style>
+
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ffd89b,#fcb69f);
+  font-family:Georgia, serif;
+}
+
+/* phone-style frame */
+.frame{
+  width:960px;
+  height:1240px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+}
+
+/* envelope */
+.envelope{
+  width:1060px;
+  height:840px;
+  background:#ff6b6b;
+  position:relative;
+  border-radius:6px;
+  overflow:hidden;
+  box-shadow:0 20px 40px rgba(0,0,0,0.3);
+}
+
+/* flap */
+.flap{
+  position:absolute;
+  top:-80px;
+  border-left:130px solid transparent;
+  border-right:130px solid transparent;
+  border-bottom:80px solid #e63946;
+  transform-origin:bottom;
+  transition:1s;
+}
+
+/* letter */
+.letter{
+  position:absolute;
+  width:880px;
+  height:700px;
+  background:white;
+  left:20px;
+  top:170px;
+  border-radius:6px;
+  padding:20px;
+  background:#ffffcc;
+  text-align:center;
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);
+  transition:1.5s;
+}
+
+/* message */
+.message{
+  font-size:50px;
+  line-height:1.6;
+  color:#333;
+}
+
+/* open animation */
+.open .flap{
+  transform:rotateX(180deg);
+}
+
+.open .letter{
+  top:50px;
+}
+
+/* hearts */
+
+.heart{
+  position:absolute;
+  font-size:25px;
+  color:#000000;
+  animation:float 3s linear forwards;
+}
+
+@keyframes float{
+  from{
+    transform:translateY(0);
+    opacity:1;
+  }
+  to{
+    transform:translateY(-300px);
+    opacity:0;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="frame">
+
+<div class="envelope" id="envelope">
+
+<div class="flap"></div>
+
+<div class="letter">
+<div class="message" id="text"></div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const envelope=document.getElementById("envelope")
+const text=document.getElementById("text")
+
+const message=`To Kishonnnn❤️,
+You are my sunshine, my only sunshine
+You make me happy when skies are gray
+You'll never know, dear, how much I love you
+Please don't take my sunshine away
+From Sharmannnn❤️`
+
+let i=0
+
+function typeWriter(){
+
+  if(i < message.length){
+
+    text.innerHTML += message.charAt(i) == "\n" ? "<br>" : message.charAt(i)
+
+    i++
+
+    setTimeout(typeWriter,40)
+
+  }
+
+}
+
+function startAnimation(){
+
+  document.getElementById("music").play();
+
+  envelope.classList.add("open")
+
+  setTimeout(typeWriter,1500)
+
+  for(let h=0;h<12;h++){
+
+    setTimeout(()=>{
+
+      let heart=document.createElement("div")
+
+      heart.className="heart"
+      heart.innerHTML="❤"
+
+      if(Math.random() > 0.5){
+        heart.style.left = Math.random()*200 + "px"
+      }else{
+        heart.style.right = Math.random()*200 + "px"
+      }
+
+      heart.style.top="500px"
+
+      document.body.appendChild(heart)
+
+      setTimeout(()=>{
+        heart.remove()
+      },5000)
+
+    },h*200)
+
+  }
+
+}
+  
+
+envelope.addEventListener("click", startAnimation)
+
+</script>
+
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+</body>
+</html>
